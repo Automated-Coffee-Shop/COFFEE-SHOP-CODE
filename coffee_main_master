@@ -1,0 +1,64 @@
+import gab2
+
+#main loop
+import time
+from tqdm import tqdm
+loop = tqdm(total = 10000, position=0, leave = False)
+for k in range(10000):
+    loop.set_description("loading...".format(k))
+    loop.update(1)
+loop.close()
+
+def main():
+    #number of password tries
+    attempt = 3
+    pw = 6969
+    while attempt >0:
+        login = int(input('''
+        1. Admin
+        2. Customer
+        '''))
+        #admin login
+        if login == 1:
+            pw = int(input("what is the password: \n"))
+            if pw ==6969:
+                #password correct
+                print("Admin in")
+                #display choices
+                while True:
+                    ad_choice =int(input("- - - - -\n\n1.Inventory\n2.POS System\n3.Coffee Tester\n4.Login Screen\n\n- - - - -\n"))
+                    if ad_choice == 1:
+                        print("INVENTORY")
+                    elif ad_choice == 2:
+                        print(gab2.pos())
+                    elif ad_choice == 3:
+                        print("COFFEE TESTER")
+                    elif ad_choice == 4:
+                        print("back to login...")
+                        time.sleep(2)
+                        break
+
+
+            #wrong password
+            else: 
+                print("wrong password")
+                attempt -=1
+
+
+            #customer login
+        elif login ==2:
+            while True:
+                cust_choice = int(input("- - - - -\n\n1.Purchase\n2.Login Screen\n\n- - - - -\n"))
+                print(gab2.menu())
+                if cust_choice == 1:
+                    print(gab2.purchase())
+                elif cust_choice ==2:
+                    print("back to login...")
+                    time.sleep(2)
+                    break
+
+
+#number of tries maxed
+    print("sorry admin lockout")
+
+main()
