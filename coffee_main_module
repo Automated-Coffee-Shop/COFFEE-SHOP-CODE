@@ -1,0 +1,114 @@
+#edit stuff
+from unicodedata import numeric
+import time
+from datetime import datetime
+
+drink_name = ["Espresso","Black Coffee", "Cappuccino", "Americano", "Latte"]
+description = ["This is Cayden's handmade Espresso","This is Cayden's handmade Black Coffee","This is Cayden's handmade Cappuccino" ,"This is Cayden's handmade Americano" ,"This is Cayden's handmade Latte"]
+customerOrder = []
+customerOrderAmount = []
+customerOrderPrice = []
+#has to be an int when doing the receipt
+price = [5.00, 6.50, 6.50, 6.25, 5.75]
+
+def pos():
+    for x in range(len(drink_name)):
+        print("drink_", x+1, drink_name[x])
+        print("description:", description[x])
+        print("price:", price[x],"\n")
+
+    while True:
+        change = input("[ add / remove / modify / exit ] the Menu?: "  )
+    #add to drink
+        if change == "add":
+            drink_name.append(input("name:"))
+            description.append(input("description:"))
+            price.append(input("price:"))
+            # check if price list is an int
+            # if price.isnumeric():
+            #     pass
+            # else:
+            #     print("price has to be an integer")
+
+    #remove a drink number
+        if change == "remove":
+            delete = (input("which drink number do you want to remove?: "))
+            if delete.isnumeric():
+                print("\n", "deleting drink", delete)
+                delete = (int(delete))
+                drink_name.pop(delete-1)
+                description.pop(delete-1)
+                price.pop(delete-1)
+                print("\n")
+                time.sleep(2)
+            else:
+                print("drink remove has to be an integer")
+                time.sleep(2)
+
+        if change == "modify":
+            modify = input("which drink number do you want to modify?: ")
+            modify = int(modify)
+            drink_name[modify-1] = str(input("What is the new name?: "))
+            description[modify-1] = str(input("What is the new description?: "))
+            price[modify-1] = float(input("What is the new price?: "))
+
+    #modify a drink
+        if change == "modify":
+            pass
+
+    #Loop back to main code
+
+        if change == "exit":
+            print("exiting back to login...")
+            time.sleep(2)
+            break
+        
+        for x in range(len(drink_name)):
+            print("drink_", x+1, drink_name[x])
+            print("description:", description[x])
+            print("price:", price[x],"\n")
+
+def menu():
+    for x in range(len(drink_name)):
+        print("drink_", x+1, drink_name[x])
+        print("description:", description[x])
+        print("price:", price[x],"\n")
+
+def purchase():
+
+    customerName = str(input("What is your name?: "))
+    while True:
+        drinkChoices = (int(input("Which drink would you like to order?: ")) - 1)
+        customerOrder.append(drinkChoices)
+        customerOrderAmount.append(int(input("How many " + drink_name[drinkChoices - 1] + "'s would you like order?: ")))
+        anotherPurchase = str(input("Would you like to purchase another drink? (Y/N): ")).upper()
+        while anotherPurchase == "Y":
+            drinkChoices = int(input("Which drink would you like to order?: "))
+            quantity = int(input("How many " + drink_name[drinkChoices - 1] + "'s would you like order?: "))
+            anotherPurchase = str(input("Would you like to purchase another drink? (Y/N): ")).upper()
+           
+            customerOrderPrice.append(quantity * price[drinkChoices - 1])
+            print(customerOrder, customerOrderAmount, customerOrderPrice)
+
+        else:
+            userInput = input("Would you like to tip? (Y/N): ").upper()
+            if userInput == "Y":
+                tipAmount = int(input("1. 10%\n2. 15%\n3. 20%\n4. Custom\n5. Back...\nPlease select a following option: "))
+                if tipAmount == 1:
+                    print("$",price * 0.10)
+                elif tipAmount == 2:
+                    print("$",price * 0.15)
+                elif tipAmount == 3:
+                    print("$",price * 0.20)
+                elif tipAmount == 4:
+                    tipCustom = int(input("What percent would you like to tip?: "))
+                    print("$",tipCustom/10)
+            else:
+                now = datetime.now()
+                current_time = now.strftime("%m-%d-%Y Time %H:%M:%S")
+                print("\nCayden's F'ing Coffee\nOrder #0069 For", customerName)
+                print(current_time)
+                print("------------------------------------\nQTY  ITEM                        AMT\n------------------------------------")
+                
+        
+            
