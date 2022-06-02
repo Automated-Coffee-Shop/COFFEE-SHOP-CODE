@@ -1,4 +1,5 @@
 #edit stuff
+from multiprocessing.connection import wait
 from unicodedata import numeric
 import time
 from datetime import datetime
@@ -10,17 +11,17 @@ price = [5.00, 6.50, 6.50, 6.25, 5.75]
 
 def pos():
     for x in range(len(drink_name)):
-        print("drink_", x+1, drink_name[x])
-        print("description:", description[x])
-        print("price:", price[x],"\n")
+        print("Drink:", x+1, drink_name[x])
+        print("Description:", description[x])
+        print("Price:", price[x],"\n")
 
     while True:
-        change = input("[ add / remove / modify / exit ] the Menu?: "  )
+        change = input("[ Add / Remove / Modify / Exit ] the menu?: "  ).upper()
     #add to drink
-        if change == "add":
-            drink_name.append(input("name:"))
-            description.append(input("description:"))
-            price.append(input("price:"))
+        if change == "ADD":
+            drink_name.append(input("Name: "))
+            description.append(input("Description: "))
+            price.append(input("Price: "))
             # check if price list is an int
             # if price.isnumeric():
             #     pass
@@ -28,10 +29,10 @@ def pos():
             #     print("price has to be an integer")
 
     #remove a drink number
-        if change == "remove":
-            delete = (input("which drink number do you want to remove?: "))
+        if change == "REMOVE":
+            delete = (input("Which drink number do you want to remove?: "))
             if delete.isnumeric():
-                print("\n", "deleting drink", delete)
+                print("\n", "Deleting drink", delete)
                 delete = (int(delete))
                 drink_name.pop(delete-1)
                 description.pop(delete-1)
@@ -39,11 +40,11 @@ def pos():
                 print("\n")
                 time.sleep(2)
             else:
-                print("drink remove has to be an integer")
+                print("Drink remove has to be an integer")
                 time.sleep(2)
 
-        if change == "modify":
-            modify = input("which drink number do you want to modify?: ")
+        if change == "MODIFY":
+            modify = input("Which drink number do you want to modify?: ")
             modify = int(modify)
             drink_name[modify-1] = str(input("What is the new name?: "))
             description[modify-1] = str(input("What is the new description?: "))
@@ -52,21 +53,21 @@ def pos():
 
     #Loop back to main code
 
-        if change == "exit":
-            print("exiting back to login...")
+        if change == "EXIT":
+            print("Exiting back to login...")
             time.sleep(2)
             break
         
         for x in range(len(drink_name)):
-            print("drink_", x+1, drink_name[x])
-            print("description:", description[x])
-            print("price:", price[x],"\n")
+            print("Drink:", x+1, drink_name[x])
+            print("Description:", description[x])
+            print("Price:", price[x],"\n")
 
 def menu():
     for x in range(len(drink_name)):
-        print("drink_", x+1, drink_name[x])
-        print("description:", description[x])
-        print("price:", price[x],"\n")
+        print("Drink:", x+1, drink_name[x])
+        print("Description:", description[x])
+        print("Price:", price[x],"\n")
 
 customerOrder = []
 customerOrderAmount = []
@@ -74,23 +75,22 @@ customerOrderPrice = []
 def purchase():
 
     customerName = str(input("What is your name?: "))
-
     anotherPurchase = "Y"
 
     while anotherPurchase == "Y":
         drinkChoices = int(input("Which drink would you like to order?: "))
         customerOrder.append(drink_name[drinkChoices-1])
-        qty = int(input("how many " + drink_name[drinkChoices-1] + "'s do you want?"))
+        qty = int(input("How many " + drink_name[drinkChoices-1] + "'s do you want?: "))
         customerOrderAmount.append(qty)
         customerOrderPrice.append(qty * price[drinkChoices-1])
         print("\n")
         for x in range(len(customerOrder)):
-            print("drink name:", customerOrder[x], ", qty:", customerOrderAmount[x])
+            print("Drink name:", customerOrder[x], ", Quantity:", customerOrderAmount[x])
         anotherPurchase = str(input("Would you like to purchase another drink? (Y/N): ")).upper()
 
         if anotherPurchase == "N":
-            print("total price: $", sum(customerOrderPrice))            
-            tipAmount = int(input("1. 10%\n2. 15%\n3. 20%\n4. Custom\n5. No tip\nPlease select a following option: "))
+            print("Total Price: $", sum(customerOrderPrice))            
+            tipAmount = int(input("1. 10%\n2. 15%\n3. 20%\n4. Custom\nPlease select a following option: "))
             if tipAmount == 1:
                 i = sum(customerOrderPrice) * 0.10
             elif tipAmount == 2:
@@ -100,18 +100,18 @@ def purchase():
             elif tipAmount == 4:
                 j = int(input("What percent would you like to tip?: "))
                 i = (j/100) * sum(customerOrderPrice)
-            elif tipAmount == 5:
-                pass
+            
             now = datetime.now()
             current_time = now.strftime("%m-%d-%Y Time %H:%M:%S")
             print("\nCayden's F'ing Coffee\nOrder #0069 For", customerName)
             print(current_time)
             print("------------------------------------\nQTY  ITEM                        AMT\n------------------------------------")
             for x in range(len(customerOrder)):
-                print(customerOrderAmount[x], customerOrder[x], "                     ", "$", customerOrderPrice[x])
+                print(customerOrderAmount[x], customerOrder[x], customerOrderPrice[x])
             print("Tipped Amount:", round(i, 2))
             print("Total Before Taxes:", round(sum(customerOrderPrice), 2))
             print("Final Total", round((sum(customerOrderPrice) + i) * 1.05, 2))
+            time.sleep(3)
             break
                 
         
