@@ -1,4 +1,4 @@
-import gab2
+import coffee_main_module
 
 #main loop
 import time
@@ -17,48 +17,46 @@ def main():
         login = int(input('''
         1. Admin
         2. Customer
-        '''))
+
+        Please choose a following login: '''))
         #admin login
         if login == 1:
-            pw = int(input("what is the password: \n"))
-            if pw ==6969:
+            pw = int(input("What is the password?: "))
+            if pw == 6969:
                 #password correct
-                print("Admin in")
+                print("\nAdmin successfully logged in.")
                 #display choices
                 while True:
-                    ad_choice =int(input("- - - - -\n\n1.Inventory\n2.POS System\n3.Coffee Tester\n4.Login Screen\n\n- - - - -\n"))
+                    ad_choice = int(input("- - - - -\n\n1. Inventory\n2. POS System\n3. Coffee Tester\n4. Login Screen\n\n- - - - -\n"))
                     if ad_choice == 1:
                         print("INVENTORY")
                     elif ad_choice == 2:
-                        print(gab2.pos())
+                        print(coffee_main_module.pos())
                     elif ad_choice == 3:
                         print("COFFEE TESTER")
                     elif ad_choice == 4:
-                        print("back to login...")
+                        print("Back to login...")
                         time.sleep(2)
                         break
-
-
             #wrong password
+
             else: 
-                print("wrong password")
+                print("Wrong password")
                 attempt -=1
-
-
             #customer login
+
         elif login ==2:
             while True:
-                cust_choice = int(input("- - - - -\n\n1.Purchase\n2.Login Screen\n\n- - - - -\n"))
-                print(gab2.menu())
+                cust_choice = int(input("- - - - -\n\n1. Purchase\n2. Login Screen\n\n- - - - -\n"))
+                print(coffee_main_module.menu())
                 if cust_choice == 1:
-                    print(gab2.purchase())
-                elif cust_choice ==2:
-                    print("back to login...")
+                    print(coffee_main_module.purchase())
+                elif cust_choice == 2:
+                    print("Back to login...")
                     time.sleep(2)
                     break
 
-
 #number of tries maxed
-    print("sorry admin lockout")
+    print("Admin Locked Out.")
 
 main()
